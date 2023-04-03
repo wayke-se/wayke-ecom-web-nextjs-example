@@ -4,8 +4,15 @@ import styles from "@/styles/Home.module.css";
 import WaykeEcomWeb from "@wayke-se/ecom-web";
 import "@wayke-se/ecom-web/dist/index.css";
 import { useEffect, useRef } from "react";
+import {GetServerSideProps, NextPage} from "next";
 
-export default function Home() {
+type Props = {
+  product: {
+    title: string
+  }
+}
+
+const Home: NextPage<Props> = ({ product }) => {
   const contextRef = useRef<WaykeEcomWeb | undefined>();
   useEffect(() => {
     contextRef.current = new WaykeEcomWeb({
@@ -27,8 +34,24 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <h1>Server Side Title: {product.title}</h1>
         <button onClick={() => contextRef.current?.start()}>Start Wayke Ecom</button>
+        <p>When removing getServerSideProps everything works as expected on Vercel. Locally it works with getServerSideProps.</p>
       </main>
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const response = await fetch('https://dummyjson.com/products/1');
+
+  const product = await response.json();
+
+  return {
+    props: {
+      product,
+    },
+  }
+}
+
+export default Home;
