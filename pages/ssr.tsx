@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 
-import WaykeEcomWeb from "@wayke-se/ecom-web";
+//import WaykeEcomWeb from "@wayke-se/ecom-web";
 import "@wayke-se/ecom-web/dist/index.css";
 import { useEffect, useRef } from "react";
 import { GetServerSideProps } from "next";
@@ -13,9 +13,10 @@ type SSRProps = {
 };
 
 const SSR = ({ product }: SSRProps) => {
-  const contextRef = useRef<WaykeEcomWeb | undefined>();
+  const contextRef = useRef<any | undefined>();
 
-  useEffect(() => {
+  const initialize = async () => {
+    const WaykeEcomWeb = (await import("@wayke-se/ecom-web")).default;
     contextRef.current = new WaykeEcomWeb({
       id: "4a18e9a4-f7ee-458e-8bb4-9b6b8b778bbf",
       ecomSdkConfig: {
@@ -24,6 +25,10 @@ const SSR = ({ product }: SSRProps) => {
         },
       },
     });
+  };
+
+  useEffect(() => {
+    initialize();
   }, []);
 
   return (
