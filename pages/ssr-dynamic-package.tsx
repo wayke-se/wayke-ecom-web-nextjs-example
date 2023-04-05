@@ -1,18 +1,17 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 
-//import WaykeEcomWeb from "@wayke-se/ecom-web";
 import "@wayke-se/ecom-web/dist/index.css";
 import { useEffect, useRef } from "react";
 import { GetServerSideProps } from "next";
 
-type SSRProps = {
+type SSRDynamicPackageProps = {
   product: {
     title: string;
   };
 };
 
-const SSR = ({ product }: SSRProps) => {
+const SSRDynamicPackage = ({ product }: SSRDynamicPackageProps) => {
   const contextRef = useRef<any | undefined>();
 
   const initialize = async () => {
@@ -40,6 +39,7 @@ const SSR = ({ product }: SSRProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <h1>Dynamic load of ecom package</h1>
         <button onClick={() => contextRef.current?.start()}>
           Start Wayke Ecom
         </button>
@@ -64,4 +64,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default SSR;
+export default SSRDynamicPackage;

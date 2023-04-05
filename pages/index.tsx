@@ -4,6 +4,7 @@ import styles from "@/styles/Home.module.css";
 import WaykeEcomWeb from "@wayke-se/ecom-web";
 import "@wayke-se/ecom-web/dist/index.css";
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const contextRef = useRef<WaykeEcomWeb | undefined>();
@@ -27,7 +28,19 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <button onClick={() => contextRef.current?.start()}>Start Wayke Ecom</button>
+        <button onClick={() => contextRef.current?.start()}>
+          Start Wayke Ecom
+        </button>
+        <ul>
+          <li>
+            <Link href="/ssr-dynamic-component">
+              SSR with dynamic component
+            </Link>
+          </li>
+          <li>
+            <Link href="/ssr-dynamic-package">SSR with dynamic package</Link>
+          </li>
+        </ul>
       </main>
     </>
   );
